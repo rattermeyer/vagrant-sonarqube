@@ -1,0 +1,20 @@
+- hosts: sonarqube
+  become: yes
+  pre_tasks:
+  - apt_repository:
+      repo: 'ppa:openjdk-r/ppa'
+      validate_certs: False
+  - apt:
+      name: "{{ item }}"
+    with_items:
+    - unzip
+  roles:
+  - role: geerlingguy.sonar
+    sonar_download_url: https://sonarsource.bintray.com/Distribution/sonarqube/sonarqube-5.1.2.zip
+    sonar_mysql_allowed_hosts:
+      - "127.0.0.1"
+      - "::1"
+      - "localhost"
+      - "%"
+    java_packages:
+      - openjdk-8-jdk

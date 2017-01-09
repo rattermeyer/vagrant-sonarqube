@@ -1,0 +1,12 @@
+---
+- hosts: all
+  become: yes
+  tasks:
+  - name: "convert to nearby mirror"
+    replace:
+      dest: "/etc/apt/sources.list"
+      regexp: "http://us.archive.ubuntu.com/ubuntu/"
+      replace: "mirror://mirrors.ubuntu.com/mirrors.txt"
+  - name: "update cache"
+    apt:
+      update_cache: true
